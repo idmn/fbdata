@@ -12,11 +12,11 @@ fb_messages <- function(file){
     data <- lapply(threads,
         function(x){
             data.frame(
-                thread  = as.factor(XML::xpathSApply(x,"text()",xmlValue)),
-                user    = as.factor(XML::xpathSApply(x, "div/div/span[@class = 'user']", xmlValue)),
-                time    = fbTime(XML::xpathSApply(x, "div/div/span[@class = 'meta']", xmlValue)),
+                thread  = as.factor(XML::xpathSApply(x,"text()", XML::xmlValue)),
+                user    = as.factor(XML::xpathSApply(x, "div/div/span[@class = 'user']", XML::xmlValue)),
+                time    = fbTime(XML::xpathSApply(x, "div/div/span[@class = 'meta']", XML::xmlValue)),
                 ##locale???
-                message = XML::xpathSApply(x, "p", xmlValue),
+                message = XML::xpathSApply(x, "p", XML::xmlValue),
                 stringsAsFactors = F
             )
         }

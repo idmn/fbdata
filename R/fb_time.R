@@ -6,3 +6,11 @@ fbTime <- function(x, locale = 'en_GB'){
                  )
     )
 }
+
+readr::parse_datetime(
+    "5 December 2014 at 16:10 UTC+03",
+    '%d %B %Y at %H:%M UTC%z',
+    locale = readr::locale(tz = "Etc/GMT+3")
+
+)
+
