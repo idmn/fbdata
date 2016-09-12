@@ -1,22 +1,15 @@
-fbTime <- function(x, locale = 'en_GB'){
-    strptime(x, format =
-                 switch(locale,
-                        'en_GB' = '%A, %d %B %Y at %H:%M',
-                        'en_US' = '%A, %B %d, %Y at %I:%M%p'
-                 )
+# maybe write in a way that it captures timezone when present
+fb_dt <- function(x, lang){
+    # try to guess locale ???
+    #locale = "en_GB"
+    readr::parse_datetime(
+        x,
+        fb_dt_formats[[lang]]
     )
 }
 
-d3 <- readr::parse_datetime(
-    "5 December 2014 at 16:10",
-    '%d %B %Y at %H:%M',
-    locale = readr::locale(tz = "Etc/GMT+3")
+fb_dt_formats <- list(
+    "en_GB" = "%* %d %B %Y at %H:%M",
+    "en_US" = "%* %B %d, %Y at %I:%M%p",
+    "ru"    = ""
 )
-
-d2 <- readr::parse_datetime(
-    "5 December 2014 at 16:10",
-    '%d %B %Y at %H:%M',
-    locale = readr::locale(tz = "Etc/GMT+2")
-)
-
-"5 December 2014 at 16:10 UTC+03"
