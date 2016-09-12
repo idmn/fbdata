@@ -11,14 +11,18 @@ fb_messages <- function(file){
     threads <- XML::getNodeSet(parsed, "//div[@class = 'thread']")
     data <- lapply(threads,
         function(x){
-            data.frame(
-                thread  = as.factor(XML::xpathSApply(x,"text()", XML::xmlValue)),
-                user    = as.factor(XML::xpathSApply(x, "div/div/span[@class = 'user']", XML::xmlValue)),
-                time    = fbTime(XML::xpathSApply(x, "div/div/span[@class = 'meta']", XML::xmlValue)),
+            df <- data.frame(
+                thread = as.factor(XML::xpathSApply(x,"text()", XML::xmlValue)),
+                user   = as.factor(XML::xpathSApply(x, "div/div/span[@class = 'user']", XML::xmlValue)),
+                str_dt = XML::xpathSApply(x, "div/div/span[@class = 'meta']", XML::xmlValue),
                 ##locale???
                 message = XML::xpathSApply(x, "p", XML::xmlValue),
                 stringsAsFactors = F
             )
+            df$tz <- stringr::str_extract(df$str_dt, "UTC[+-]\\d\\d")
+            ## how to get lang
+            df$dt <- fb_dt(stringr::str_replace(df$str_dt, "[, ]*UTC[+-]\\d\\d", ""), "en_GB")
+            df[, c("thread", "user", "dt", "tz", "message")]
         }
     )
     do.call(rbind, data)
