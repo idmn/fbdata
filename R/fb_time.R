@@ -1,4 +1,3 @@
-# maybe write in a way that it captures timezone when present
 fb_dt <- function(x, lang){
     # try to guess locale ???
     #locale = "en_GB"
