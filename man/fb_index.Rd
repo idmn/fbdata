@@ -15,4 +15,7 @@ fb_index(file)
 \description{
 Read profile information from Facebook index.htm file
 }
+\examples{
+prfl <- fb_index("my_fb_data/index.htm")
+}
 

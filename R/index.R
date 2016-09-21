@@ -1,13 +1,15 @@
 #' Read profile information from Facebook index.htm file
 #'
-#' @param file location of your index.htm file
+#' @param path location of your Facebook data folder or precise location of index.htm file
 #'
 #' @return \code{data.frame} with two columns - \code{field} and \code{value}
 #' @export
 #'
 #' @examples
 #' prfl <- fb_index("my_fb_data/index.htm")
-fb_index <- function(file){
+fb_index <- function(path){
+    if (file.exists(path)) file <- path
+    else file <- paste0(path, "/index.htm")
     parsed <- XML::xmlParseDoc(file, encoding = "UTF-8")
     table <- XML::xpathApply(
         parsed, "/html/body/div/div/table",

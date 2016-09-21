@@ -4,19 +4,19 @@
 \alias{fb_messages}
 \title{Read messages from Facebook html/messages.htm file}
 \usage{
-fb_messages(file)
+fb_messages(path)
 }
 \arguments{
-\item{file}{location of your messages.htm file}
+\item{path}{path to your facebook data folder or precise location of messages.htm file}
 }
 \value{
 \code{data.frame} with 5 variables:
 \describe{
- \item{thread}{thread name - participants names separated by commas}
- \item{user}{name of the message's author}
- \item{dt}{time when message was posted}
- \item{tz}{your timezone at the moment when you recieved the message}
- \item{message}{message itself}
+ \item{\code{thread}}{thread name - participants names separated by commas}
+ \item{\code{user}}{name of the message's author}
+ \item{\code{dt}}{time when the message was created, in your time settings}
+ \item{\code{tz}}{your timezone at the moment when you recieved the message}
+ \item{\code{message}}{message itself}
 }
 }
 \description{
