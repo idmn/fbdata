@@ -1,0 +1,41 @@
+index.htm							table
+
+html/ads.htm  			Ads Topics: 			ul
+				Adverts History: 		ul
+
+html/contact_info.htm						table
+
+html/events.htm			Events:				ul
+
+html/friends.htm		Friends:			ul
+				Sent Friend Requests:		ul
+				Received Friend Requests:	ul
+				Removed Friends:		ul
+				Friends Peer Group:		ul
+
+html/messages.htm						thread
+
+html/mobile_devices.htm		NO DATA
+
+html/photos.htm							blocks
+
+html/places.htm			Places				ul
+
+html/pokes.htm			Pokes				ul
+
+html/security.htm		Active Sessions			ul-table
+				Account activity		ul-table
+				Recognized Machines		ul-table
+				Logins and Logouts		ul
+				Login Protection Data		ul-table
+				IP Addresses			ul
+				Datr Authentication Cookie Info ul-table
+				Administrative Records		ul-table
+
+html/survey_responses.htm	NO DATA
+
+html/synced_photos.htm		NO DATA
+
+html/timeline.htm						div (class differs)
+
+html/videos.htm							blocks

@@ -17,8 +17,9 @@
 #' msgs <- fb_messages("my_fb_data")
 #' msgs <- fb_messages("my_fb_data/html/messages.htm")
 fb_messages <- function(path){
-    if (file.exists(path)) file <- path
-    else file <- paste0(path, "/html/messages.htm")
+    if (!(file.exists(path) | dir.exists(path))) stop("File/directory doesn't exist.")
+    if (file.info(path)$isdir) file <- paste0(path, "/html/messages.htm")
+    else file <- path
     parsed <- XML::htmlParse(readLines(file, encoding = "UTF-8", warn = F))
     threads <- XML::getNodeSet(parsed, "//div[@class = 'thread']")
     data <- lapply(

@@ -6,21 +6,39 @@
 #' @export
 #'
 #' @examples
+#' prfl <- fb_index("my_fb_data")
 #' prfl <- fb_index("my_fb_data/index.htm")
 fb_index <- function(path){
-    if (file.exists(path)) file <- path
-    else file <- paste0(path, "/index.htm")
+    if (!(file.exists(path) | dir.exists(path))) stop("File/directory doesn't exist.")
+    if (file.info(path)$isdir){
+        file <- paste0(path, "/index.htm")
+    } else file <- path
     parsed <- XML::xmlParseDoc(file, encoding = "UTF-8")
-    table <- XML::xpathApply(
-        parsed, "/html/body/div/div/table",
-        ## stringsAsFactors = F doesn't work
-        function(x) XML::xmlToDataFrame(x, stringsAsFactors = F))[[1]]
-    field <- table[[1]]
-    value <- table[[2]]
+    xmlValue_2 <- function(x){
+        res <- XML::xmlToList(x)
+        res <- unlist(res, use.names = F)
+        if (!is.null(res)) res <- unlist(strsplit(res, ", "))
+        res
+    }
+    field <- XML::xpathSApply(
+        parsed,
+        "/html/body/div[@class = 'contents']/div/table/tr/th",
+        XML::xmlValue,
+        xmlValue_2
+    )
+    value <- XML::xpathSApply(
+        parsed,
+        "/html/body/div[@class = 'contents']/div/table/tr/td",
+        xmlValue_2
+    )
     name <- XML::xpathSApply(parsed, "/html/body/div/h1", XML::xmlValue)
-    value <- strsplit(value[-18], ", ")
-    apps <- XML::xpathSApply(parsed, "/html/body/div/div/table/tr[18]/td/ul/li", XML::xmlValue)
-    value <- c(list(name), value, list(apps))
-    field <- c("name", field)
     tibble::data_frame(field, value)
 }
+
+fb_table <- function(node){
+
+}
+
+
+
+"/html/body/div[@class = 'contents']/div"
