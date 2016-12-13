@@ -9,36 +9,20 @@
 #' prfl <- fb_index("my_fb_data")
 #' prfl <- fb_index("my_fb_data/index.htm")
 fb_index <- function(path){
-    if (!(file.exists(path) | dir.exists(path))) stop("File/directory doesn't exist.")
-    if (file.info(path)$isdir){
-        file <- paste0(path, "/index.htm")
-    } else file <- path
-    parsed <- XML::xmlParseDoc(file, encoding = "UTF-8")
-    xmlValue_2 <- function(x){
-        res <- XML::xmlToList(x)
-        res <- unlist(res, use.names = F)
+    file <- fb_get_file(path, "index")
+    contents <- fb_contents(file)
+    get_text <- function(x){
+        res <- unlist(xml2::as_list(x), use.names = F)
         if (!is.null(res)) res <- unlist(strsplit(res, ", "))
         res
     }
-    field <- XML::xpathSApply(
-        parsed,
-        "/html/body/div[@class = 'contents']/div/table/tr/th",
-        XML::xmlValue,
-        xmlValue_2
+    field <- lapply(
+        xml2::xml_find_all(contents, "/div/table/tr/th"),
+        get_text
     )
-    value <- XML::xpathSApply(
-        parsed,
-        "/html/body/div[@class = 'contents']/div/table/tr/td",
-        xmlValue_2
+    value <- lapply(
+        xml2::xml_find_all(contents, "/div/table/tr/td"),
+        get_text
     )
-    name <- XML::xpathSApply(parsed, "/html/body/div/h1", XML::xmlValue)
     tibble::data_frame(field, value)
 }
-
-fb_table <- function(node){
-
-}
-
-
-
-"/html/body/div[@class = 'contents']/div"
