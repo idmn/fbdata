@@ -17,9 +17,27 @@
 #' msgs <- fb_messages("my_fb_data")
 #' msgs <- fb_messages("my_fb_data/html/messages.htm")
 fb_messages <- function(path){
-    if (!(file.exists(path) | dir.exists(path))) stop("File/directory doesn't exist.")
-    if (file.info(path)$isdir) file <- paste0(path, "/html/messages.htm")
-    else file <- path
+    file <- fb_get_file(path, "html/messages")
+    contents <- fb_contents(file)
+    ## it is possible that there would be no outer div
+    threads <- xml2::xml_find_all(contents, "div/div[@class = 'thread']")
+    data <- lapply(
+        threads,
+        function(x){
+            df <- tibble::tibble(
+                thread  = xml2::xml_text(xml2::xml_find_first(x, "text()")),
+                user    = xml2::xml_text(xml2::xml_find_all(x, "div/div/span[@class = 'user']")),
+                str_dt  = xml2::xml_text(xml2::xml_find_all(x, "div/div/span[@class = 'meta']")),
+                message = xml2::xml_text(xml2::xml_find_all(x, "p"))
+            )
+        }
+    )
+    data <- do.call(rbind, data)
+    data
+}
+
+fb_messages <- function(path){
+    file <- fb_get_file(path, "html/messages")
     parsed <- XML::htmlParse(readLines(file, encoding = "UTF-8", warn = F))
     threads <- XML::getNodeSet(parsed, "//div[@class = 'thread']")
     data <- lapply(
@@ -41,3 +59,5 @@ fb_messages <- function(path){
     )
     do.call(rbind, data)
 }
+
+

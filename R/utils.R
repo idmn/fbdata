@@ -9,13 +9,10 @@ fb_get_file <- function(path, what){
 
 fb_contents <- function(file){
     parsed <- xml2::read_html(file)
-    xml2::xml_find_first(parsed, "/html/body/div[@class = 'contents']/div")
     contents <- xml2::xml_new_document()
     contents <- xml2::xml_add_child(
         contents,
-        xml2::xml_find_first(parsed, "/html/body/div[@class = 'contents']/div")
+        xml2::xml_find_first(parsed, "/html/body/div[@class = 'contents']")
     )
     contents
 }
-
-
