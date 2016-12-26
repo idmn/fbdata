@@ -8,7 +8,8 @@ Description: More about what it does (maybe more than one line)
 License: What license is it under?
 LazyData: TRUE
 Imports:
-    XML,
     xml2,
-    tibble
+    tibble,
+    stringr,
+    readr
 RoxygenNote: 5.0.1
