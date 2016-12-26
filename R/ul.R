@@ -19,7 +19,7 @@ fb_parse_ul <- function(ul){
 
 fb_ul <- function(contents){
     div <- xml2::xml_find_all(contents, "//div[ul]")
-    ul <- lapply(div, fb_get_uls)
+    ul <- lapply(div, fb_get_entitled_uls)
     ul <- do.call(c, ul)
     lapply(ul, fb_parse_ul)
 }

@@ -1,4 +1,16 @@
-fb_parse <- function(file, parser = NULL){
+#' Parse FB file
+#'
+#' @param file file to parse
+#' @param parser which parser to use. This function normally should detect by itself.
+#' But if any problems occur, you can set it by hands. Possible values are:
+#'  "table", "ul", "thread".
+#'
+#' @export
+#'
+#' @examples
+#' msgs <- fb_parse_file("data/html/messages.htm)
+#' msgs <- fb_parse_file("data/html/messages.htm, parser = "thread")
+fb_parse_file <- function(file, parser = NULL){
     obj <- fb_contents(file)
     if (!is.null(parser)) parser_function <- switch(
             parser,

@@ -12,7 +12,6 @@ fb_contents <- function(file){
     what <- xml2::xml_find_all(parsed, "/html/body/div[@class = 'nav']//li[@class = 'selected']")
     what <- xml2::xml_text(what)
     what <- tolower(what)
-    strsplit(meta, ";")[[1]][[1]]
     contents <- xml2::xml_find_first(parsed, "/html/body/div[@class = 'contents']")
     root <- xml2::xml_root(parsed)
     xml2::xml_replace(root, contents)
