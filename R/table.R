@@ -7,5 +7,9 @@ fb_table <- function(contents){
         xml2::xml_find_all(contents, "//table/tr/td"),
         function(x) fb_get_text(x, split_by_comma = T)
     )
-    tibble::data_frame(field, value)
+    res <- tibble::data_frame(field, value)
+    for(i in 1:ncol(res)){
+        if (all(sapply(res[[i]], length) <= 1)) res[[i]] <- unlist(res[[i]])
+    }
+    res
 }

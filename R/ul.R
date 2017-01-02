@@ -17,12 +17,26 @@ fb_parse_ul <- function(ul){
     res
 }
 
+fb_ul_to_tibble <- function(x){
+    res <- lapply(
+        x,
+        function(y){
+            nms <- stringr::str_extract(y, "^.*?(?=:)")
+            y <- stringr::str_replace(y, "^.*?:", "")
+            tibble::as_tibble(split(y, nms))
+        }
+    )
+    do.call(dplyr::bind_rows, res)
+}
+
 fb_ul <- function(contents){
     div <- xml2::xml_find_all(contents, "//div[ul]")
     ul <- lapply(div, fb_get_entitled_uls)
     ul <- do.call(c, ul)
     lapply(ul, fb_parse_ul)
 }
+
+
 
 
 
