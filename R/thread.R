@@ -15,7 +15,7 @@ fb_thread <- function(contents){
     data$thread <- as.factor(data$thread)
     data$user <- as.factor(data$user)
     data$tz <- stringr::str_extract(data$str_dt, "UTC[+-]\\d\\d")
-    data$dt <- fb_dt(stringr::str_replace(data$str_dt, "[, ]*UTC[+-]\\d\\d", ""), "en_GB")
+    data$dt <- fb_parse_dt(stringr::str_replace(data$str_dt, "[, ]*UTC[+-]\\d\\d", ""), "en_GB")
     data
 }
 
