@@ -3,7 +3,6 @@
 #' @param x character vector of datetimes
 #' @param lang language in which time is written
 #'
-#' @return
 #' @export
 #'
 #' @examples

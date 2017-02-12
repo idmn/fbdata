@@ -9,9 +9,8 @@ fb_parse_file(file, parser = NULL)
 \arguments{
 \item{file}{file to parse}
 
-\item{parser}{which parser to use. This function normally should detect by itself.
-But if any problems occure, you can specify it. Possible values are:
-\code{"table"}, \code{"ul"}, \code{"thread"}.}
+\item{parser}{which parser to use. This function normally should choose it
+automatically. Possible values are: \code{"table"}, \code{"ul"}, \code{"thread"}.}
 }
 \description{
 Parse FB file
