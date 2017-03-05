@@ -12,10 +12,11 @@ fb_contents <- function(file){
     what <- xml2::xml_find_all(parsed, "/html/body/div[@class = 'nav']//li[@class = 'selected']")
     what <- xml2::xml_text(what)
     what <- tolower(what)
+    ind <- xml2::xml_find_num(parsed, "count(/html/body/div[@class = 'nav']//li[@class = 'selected']/preceding-sibling::li)") + 1
     contents <- xml2::xml_find_first(parsed, "/html/body/div[@class = 'contents']")
     root <- xml2::xml_root(parsed)
     xml2::xml_replace(root, contents)
-    list(what = what, contents = contents)
+    list(ind, what, contents)
 }
 
 fb_get_text <- function(x, split_by_comma = F){
@@ -23,5 +24,6 @@ fb_get_text <- function(x, split_by_comma = F){
     if (split_by_comma & !is.null(res)) res <- unlist(strsplit(res, ", "))
     res
 }
+
 
 
