@@ -4,16 +4,16 @@
 \alias{fb_parse_dt}
 \title{Parse datetime in FB data}
 \usage{
-fb_parse_dt(x, lang)
+fb_parse_dt(x, format = NULL)
 }
 \arguments{
 \item{x}{character vector of datetimes}
 
-\item{lang}{language in which time is written}
+\item{format}{datetime format id. See <link here>}
 }
 \description{
 Parse datetime in FB data
 }
 \examples{
-# no examples currently
+fb_parse_dt("Wednesday, 9 March 2016 at 16:01 UTC+02")
 }

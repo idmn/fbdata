@@ -18,4 +18,5 @@ Parse FB file
 \examples{
 msgs <- fb_parse_file("data/html/messages.htm)
 msgs <- fb_parse_file("data/html/messages.htm, parser = "thread")
+
 }

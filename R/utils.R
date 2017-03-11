@@ -16,7 +16,7 @@ fb_contents <- function(file){
     contents <- xml2::xml_find_first(parsed, "/html/body/div[@class = 'contents']")
     root <- xml2::xml_root(parsed)
     xml2::xml_replace(root, contents)
-    list(ind, what, contents)
+    list(ind = ind, what = what, contents = contents)
 }
 
 fb_get_text <- function(x, split_by_comma = F){

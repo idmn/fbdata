@@ -12,10 +12,11 @@ fb_thread <- function(contents){
         }
     )
     data <- do.call(rbind, data)
+    data$str_dt <- enc2native(data$str_dt) ## do this for other text variables?
     data$thread <- as.factor(data$thread)
     data$user <- as.factor(data$user)
     data$orig_tz <- stringr::str_extract(data$str_dt, "UTC[+-]\\d\\d")
-    data$dt <- fb_parse_dt(data$str_dt, "en_GB")
+    data$dt <- fb_parse_dt(data$str_dt)
     data
 }
 
